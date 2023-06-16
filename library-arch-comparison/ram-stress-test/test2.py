@@ -1,17 +1,13 @@
-from sklearn import svm
-
-import time
-import os
-import random
-import cv2
-import numpy as np
+import tensorflow as tf
+from tensorflow.keras import layers
 import imgaug.augmenters as iaa
-import lightgbm as lgb
-
-start = time.time()
+import os
+import cv2
+import random
+import numpy as np
 
 image_folder = "./images/data/data"
-minimum_data = 100 # 11800 (8GB) 5900 (4GB) 2950 (2GB) 2700(1.9GB) 2400 (1.7GB) 2500(1.8GB)
+minimum_data = 8000 #7800 # 11800 (8GB) 5900 (4GB) 2950 (2GB) 2700(1.9GB) 2400 (1.7GB) 2500(1.8GB)
 x_train = []
 y_train = []
 
@@ -43,8 +39,8 @@ seq = iaa.Sequential([
 x_train_aug = seq(images=x_train)
 y_train_aug = np.random.randint(2, size=(len(x_train_aug)))
 
-x_train = x_train.reshape(len(x_train),-1)
-x_train_aug = x_train_aug.reshape(len(x_train_aug),-1)
+# x_train = x_train.reshape(len(x_train),-1)
+# x_train_aug = x_train_aug.reshape(len(x_train_aug),-1)
 
 total_x_train = np.concatenate((x_train, x_train_aug), axis=0)
 total_y_train = np.concatenate((y_train, y_train_aug), axis=0)
@@ -54,25 +50,28 @@ print(total_y_train.shape)
 np_size = total_x_train.itemsize*total_x_train.size/1000000000
 print(f"The memory size of numpy array arr is: {np_size} GB")
 
-lgb_train = lgb.Dataset(total_x_train, total_y_train)
+# Normalize the data
+total_x_train = total_x_train.astype("float32") / 255.0
 
-params = {
-    'objective': 'binary',
-    'metric': 'auc',
-    'num_iterations': 50,
-    'learning_rate': 0.1,
-    # max_depth: 20 # 10, 40
-    # num_leaves: 31 # 50, 60
-    'boosting': 'gbdt',
-    # min_data_in_leaf: 20 # 20, 40
-}
+# Define the model
+model = tf.keras.Sequential([
+    layers.Conv2D(32, (3, 3), activation="relu", input_shape=(600, 600, 1)),
+    layers.MaxPooling2D(pool_size=(2, 2)),
+    layers.Flatten(),
+    layers.Dense(2, activation="softmax")
+])
 
-bst = lgb.train(params, train_set=lgb_train, callbacks=[lgb.log_evaluation()])
+# Compile the model
+model.compile(
+    optimizer="adam",
+    loss="sparse_categorical_crossentropy",
+    metrics=["accuracy"]
+)
 
-# #Create a svm Classifier
-# clf = svm.SVC(kernel='linear') # Linear Kernel
+# Print the model summary
+model.summary()
 
-# #Train the model using the training sets
-# clf.fit(x_train, y_train)
-
-print("Time taken :", (time.time() - start)/60, 'minutes')
+# Train the model
+print("Starting model training...")
+model.fit(total_x_train, total_y_train, batch_size=64, epochs=10)
+print("Model training completed.")
