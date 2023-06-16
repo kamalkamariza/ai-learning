@@ -7,7 +7,7 @@ import random
 import numpy as np
 
 image_folder = "./images/data/data"
-minimum_data = 8000 #7800 # 11800 (8GB) 5900 (4GB) 2950 (2GB) 2700(1.9GB) 2400 (1.7GB) 2500(1.8GB)
+minimum_data = 7700 #7800 # 11800 (8GB) 5900 (4GB) 2950 (2GB) 2700(1.9GB) 2400 (1.7GB) 2500(1.8GB)
 x_train = []
 y_train = []
 
@@ -48,7 +48,7 @@ print(total_x_train.shape)
 print(total_y_train.shape)
 
 np_size = total_x_train.itemsize*total_x_train.size/1000000000
-print(f"The memory size of numpy array arr is: {np_size} GB")
+print(f"The memory size of numpy array arr is: {np_size} GB {total_x_train.dtype}")
 
 # Normalize the data
 total_x_train = total_x_train.astype("float32") / 255.0
@@ -73,5 +73,5 @@ model.summary()
 
 # Train the model
 print("Starting model training...")
-model.fit(total_x_train, total_y_train, batch_size=64, epochs=10)
+model.fit(total_x_train, total_y_train, batch_size=64, epochs=2)
 print("Model training completed.")
