@@ -7,7 +7,7 @@ import random
 import numpy as np
 
 image_folder = "./images/data/data"
-# minimum_data = 7700 #7800 # 11800 (8GB) 5900 (4GB) 2950 (2GB) 2700(1.9GB) 2400 (1.7GB) 2500(1.8GB)
+minimum_data = 7700 #7600 #7800 # 11800 (8GB) 5900 (4GB) 2950 (2GB) 2700(1.9GB) 2400 (1.7GB) 2500(1.8GB)
 x_train = []
 y_train = []
 
@@ -49,10 +49,8 @@ total_y_train = y_train
 # total_y_train = np.concatenate((y_train, y_train_aug), axis=0)
 # print(total_x_train.shape)
 # print(total_y_train.shape)
-
 total_x_train = total_x_train.astype(np.uint8)
 total_y_train = total_y_train.astype(np.uint8)
-x_np_size = total_x_train.itemsize*total_x_train.size/1000000000
 y_np_size = total_y_train.itemsize*total_y_train.size/1000000000
 print(f"The memory size of x numpy array arr is: {x_np_size} GB {total_x_train.dtype}")
 print(f"The memory size of y numpy array arr is: {y_np_size} GB {total_y_train.dtype}")
