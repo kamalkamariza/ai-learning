@@ -14,7 +14,7 @@ jobs:
         run: |
           pip install -r ./mlops/requirements.txt
           python ./mlops/main.py
-
+          ls -l ./mlops
           cat ./mlops/results/results.txt >> report.md
           echo "![](./mlops/figures/plot.png)" >> report.md
           cml comment create report.md
