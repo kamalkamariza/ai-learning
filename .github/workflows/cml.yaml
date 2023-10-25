@@ -2,7 +2,7 @@ name: cml-flow
 on: [push]
 jobs:
   mlops_folder:
-    # runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     container: ghcr.io/iterative/cml:0-dvc2-base1
     steps:
       - uses: actions/checkout@v3
@@ -23,7 +23,7 @@ jobs:
 
   mlops_folder_2:
     runs-on: ubuntu-latest
-    # container: ghcr.io/iterative/cml:0-dvc2-base1
+    container: ghcr.io/iterative/cml:0-dvc2-base1
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
