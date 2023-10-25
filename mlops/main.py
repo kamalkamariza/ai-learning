@@ -2,7 +2,9 @@ import os
 from datetime import datetime
 import uuid
 
-print("Running main.py")
+base_folder = os.getenv("BASE_FOLDER", "")
+
+print(f"Running main.py in {base_folder}")
 result_path = os.path.join("results", "results.txt")
 print(result_path)
 os.makedirs(os.path.dirname(result_path), exist_ok=True)

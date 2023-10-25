@@ -11,8 +11,9 @@ jobs:
       - name: Test Reporting
         env:
           REPO_TOKEN: ${{ secrets.TOKEN }}
-        run: 
-          cd "./mlops"
+          BASE_FOLDER: "mlops"
+        run:
+          cd "mlops"
           pip install -r requirements.txt
           python main.py
           ls -l .
