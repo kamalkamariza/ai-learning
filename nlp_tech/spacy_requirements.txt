@@ -1,0 +1,7 @@
+spacy # no dependencies
+thinc
+langcodes
+typer
+weasel
+tqdm
+jinja2
