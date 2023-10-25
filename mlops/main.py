@@ -3,7 +3,7 @@ from datetime import datetime
 import uuid
 
 print("Running main.py")
-result_path = os.path.join("mlops","results", "results.txt")
+result_path = os.path.join("results", "results.txt")
 print(result_path)
 os.makedirs(os.path.dirname(result_path), exist_ok=True)
 

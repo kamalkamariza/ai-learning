@@ -1,4 +1,4 @@
-name: ml-flow
+name: cml-flow
 on: [push]
 jobs:
   mlops_folder:
@@ -10,11 +10,25 @@ jobs:
       - uses: iterative/setup-cml@v1
       - name: Test Reporting
         env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          pip install -r ./mlops/requirements.txt
-          python ./mlops/main.py
-          ls -l ./mlops
-          cat ./mlops/results/results.txt >> report.md
-          echo "![](./mlops/figures/plot.png)" >> report.md
+          REPO_TOKEN: ${{ secrets.TOKEN }}
+        run: 
+          cd mlops
+          pip install -r requirements.txt
+          python main.py
+          ls -l .
+          cat results/results.txt >> report.md
+          echo "![](figures/plot.png)" >> report.md
           cml comment create report.md
+
+  mlops_folder_2:
+    runs-on: ubuntu-latest
+    # container: ghcr.io/iterative/cml:0-dvc2-base1
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+      - uses: iterative/setup-cml@v1
+      - name: Test Reporting 2
+        env:
+          REPO_TOKEN: ${{ secrets.TOKEN }}
+        run: 
+          ls l.
