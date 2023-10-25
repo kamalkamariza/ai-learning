@@ -10,7 +10,7 @@ jobs:
       - uses: iterative/setup-cml@v1
       - name: Test Reporting
         env:
-          REPO_TOKEN: ${{ secrets.TOKEN }}
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BASE_FOLDER: "mlops"
         run:
           cd "mlops";
@@ -30,6 +30,6 @@ jobs:
       - uses: iterative/setup-cml@v1
       - name: Test Reporting 2
         env:
-          REPO_TOKEN: ${{ secrets.TOKEN }}
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: 
           ls .
