@@ -1,0 +1,5 @@
+/lancedb
+/description_embedding.lance
+/rag_graph_data/cache
+/rag_graph_data/input
+/rag_graph_data/output
